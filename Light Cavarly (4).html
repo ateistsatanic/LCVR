@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Cavarly W.T.C: Гарантия победы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ffcc00;
+            --secondary-color: #000000;
+            --background-color: #111111;
+            --text-color: #ffffff;
+            --highlight-text: #00ff00;
+            --mention-text: #00ffff;
+            --rewrite-text: #ff7f00;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            font-family: 'Oswald', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 5px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .container {
+            background-color: var(--background-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            padding: 15px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .login-input {
+            background-color: #222222;
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 3px;
+            padding: 12px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1em;
+        }
+
+        .login-button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 12px;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .login-button:hover {
+            background-color: #e6b800;
+        }
+
+        .error-message {
+            color: #ff4444;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            text-shadow: 0 0 5px rgba(255, 204, 0, 0.8);
+        }
+
+        .description {
+            color: #cccccc;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .tab-button {
+            flex-grow: 1;
+            padding: 10px 0;
+            background-color: #222222;
+            color: var(--primary-color);
+            border: none;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            text-align: center;
+            border-right: 1px solid #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-width: 25%;
+        }
+
+        .tab-button:nth-child(4) {
+            border-right: none;
+        }
+
+        .tab-button.active {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border-bottom: 1px solid var(--primary-color);
+            cursor: default;
+        }
+
+        .tab-button:not(.active):hover {
+            background-color: #333333;
+            color: var(--text-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        textarea {
+            width: calc(100% - 16px);
+            height: 120px;
+            background-color: #222222;
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 3px;
+            padding: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .compare-input-group textarea {
+            height: 120px;
+        }
+
+        .compare-input-group label {
+            color: var(--rewrite-text);
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .button-group button {
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+        }
+
+        .copy-button {
+            background-color: #333333 !important;
+            color: var(--primary-color) !important;
+            border: 1px solid var(--primary-color);
+            margin-top: 10px;
+        }
+
+        .copy-button:hover {
+            background-color: #555555 !important;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+        }
+
+        .clear-button {
+            background-color: #440000 !important;
+            color: var(--primary-color) !important;
+            border: 1px solid var(--primary-color);
+        }
+
+        .clear-button:hover {
+            background-color: #660000 !important;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+        }
+
+        .results-container {
+            margin-top: 20px;
+            border: 1px solid #b38f00;
+            border-radius: 4px;
+            padding: 8px;
+            background-color: #111111;
+            min-height: 70px;
+        }
+
+        .results-container p:first-child {
+            color: #ffea7f;
+            margin-bottom: 5px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95em;
+        }
+
+        .result-block {
+            background-color: #2a2a00;
+            border: 1px solid var(--primary-color);
+            border-radius: 3px;
+            padding: 8px;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.88em;
+            word-wrap: break-word;
+            box-shadow: 0 0 5px rgba(255, 204, 0, 0.4);
+        }
+
+        .result-block.compare-found {
+            background-color: #331a00;
+            color: var(--rewrite-text);
+            border-color: var(--rewrite-text);
+        }
+
+        .result-block.hidden-char {
+            background-color: #002a2a;
+            color: var(--highlight-text);
+            border-color: var(--highlight-text);
+        }
+
+        .result-block.mention-found {
+            background-color: #002020;
+            color: var(--mention-text);
+            border-color: var(--mention-text);
+        }
+
+        .result-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .owner {
+            text-align: center;
+            margin-top: 20px;
+            color: #999999;
+            font-size: 0.8em;
+        }
+
+        .logout-btn {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .logout-btn button {
+            background: #333;
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            width: auto;
+            display: inline-block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            padding-top: 50px;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background-color: #111111;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid var(--primary-color);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+            position: relative;
+        }
+
+        .close-button {
+            color: var(--primary-color);
+            font-size: 30px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .highlighted-text {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: var(--text-color);
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 60vh;
+            overflow-y: auto;
+            border: 1px solid #444400;
+            padding: 10px;
+            background-color: #080800;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loginContainer" class="login-container">
+            <h1>Light Cavarly W.T.C</h1>
+            <p class="description">Гарантия победы.</p>
+            
+            <div class="login-form">
+                <input type="text" id="username" class="login-input" placeholder="Логин" required>
+                <input type="password" id="password" class="login-input" placeholder="Пароль" required>
+                <button class="login-button" onclick="login()">Войти</button>
+                <div id="loginError" class="error-message hidden">Неверный логин или пароль</div>
+            </div>
+        </div>
+
+        <div id="mainContent" class="hidden">
+            <h1>Light Cavarly W.T.C</h1>
+            <p class="description">Гарантия победы.</p>
+
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'compare')">Сравнение Текстов</button>
+                <button class="tab-button" onclick="openTab(event, 'repetitions')">Поиск Повторений</button>
+                <button class="tab-button" onclick="openTab(event, 'hidden-chars')">Поиск Скрытия</button>
+                <button class="tab-button" onclick="openTab(event, 'mentions')">Поиск Упоминаний</button>
+            </div>
+
+            <div id="compare" class="tab-content active">
+                <div class="compare-input-group">
+                    <label for="inputTextOriginal">Текст 1 (Оригинал):</label>
+                    <textarea id="inputTextOriginal" placeholder="Вставь первый текст для сравнения..."></textarea>
+                </div>
+                <div class="compare-input-group">
+                    <label for="inputTextRewrite">Текст 2 (Подозрительный):</label>
+                    <textarea id="inputTextRewrite" placeholder="Вставь второй текст для проверки на сходство..."></textarea>
+                </div>
+                <div class="button-group">
+                    <button onclick="findRewrite()">Сравнить Тексты</button>
+                    <button class="clear-button" onclick="clearInputs('inputTextOriginal', 'inputTextRewrite')">Очистить Оба</button>
+                </div>
+                <div class="results-container" id="outputResultsRewrite">
+                    <p>Результаты сравнения:</p>
+                </div>
+                <button class="copy-button" onclick="copyResults('outputResultsRewrite', true)">Копировать результаты</button>
+            </div>
+
+            <div id="repetitions" class="tab-content">
+                <textarea id="inputTextRepetitions" placeholder="Вставь сюда текст для поиска повторений..."></textarea>
+                <div class="button-group">
+                    <button onclick="findRepetitions()">Найти повторения</button>
+                    <button class="clear-button" onclick="clearInput('inputTextRepetitions')">Очистить</button>
+                </div>
+                <div class="results-container" id="outputResultsRepetitions">
+                    <p>Результаты поиска:</p>
+                </div>
+                <button class="copy-button" onclick="copyResults('outputResultsRepetitions', true)">Копировать результаты</button>
+            </div>
+
+            <div id="hidden-chars" class="tab-content">
+                <textarea id="inputTextHiddenChars" placeholder="Вставь сюда текст для поиска английских букв и скрытых символов..."></textarea>
+                <div class="button-group">
+                    <button onclick="findHiddenChars()">Найти скрытия</button>
+                    <button class="clear-button" onclick="clearInput('inputTextHiddenChars')">Очистить</button>
+                </div>
+                <div class="results-container" id="outputResultsHiddenChars">
+                    <p>Результаты поиска:</p>
+                </div>
+                <button class="copy-button" onclick="copyResults('outputResultsHiddenChars', true)">Копировать результаты</button>
+            </div>
+
+            <div id="mentions" class="tab-content">
+                <textarea id="inputTextMentions" placeholder="Вставь сюда текст для поиска упоминаний..."></textarea>
+                <div class="button-group">
+                    <button onclick="findMentions()">Найти упоминания</button>
+                    <button class="clear-button" onclick="clearInput('inputTextMentions')">Очистить</button>
+                </div>
+                <div class="results-container" id="outputResultsMentions">
+                    <p>Результаты поиска:</p>
+                </div>
+                <button class="copy-button" onclick="copyResults('outputResultsMentions', true)">Копировать результаты</button>
+            </div>
+
+            <p class="owner">Owner By. Barth & Akimov</p>
+            <div class="logout-btn">
+                <button onclick="logout()">Выйти</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="hiddenCharsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('hiddenCharsModal')">&times;</span>
+            <h2 style="color: var(--highlight-text); text-align: center; margin-bottom: 15px; font-size: 1.5em;">Обнаруженные скрытия</h2>
+            <div id="highlightedTextDisplay" class="highlighted-text"></div>
+        </div>
+    </div>
+
+    <div id="mentionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('mentionsModal')">&times;</span>
+            <h2 style="color: var(--mention-text); text-align: center; margin-bottom: 15px; font-size: 1.5em;">Обнаруженные упоминания</h2>
+            <div id="highlightedMentionsDisplay" class="highlighted-text"></div>
+        </div>
+    </div>
+
+    <script>
+        const _0x353493=_0x1f52;(function(_0x430b0f,_0x3c964e){const _0x5f46a8=_0x1f52,_0x224f25=_0x430b0f();while(!![]){try{const _0x554392=parseInt(_0x5f46a8(0x19e))/0x1+parseInt(_0x5f46a8(0x1ec))/0x2+parseInt(_0x5f46a8(0x1d2))/0x3+-parseInt(_0x5f46a8(0x1a2))/0x4*(-parseInt(_0x5f46a8(0x1b5))/0x5)+-parseInt(_0x5f46a8(0x1b7))/0x6+parseInt(_0x5f46a8(0x1b4))/0x7+-parseInt(_0x5f46a8(0x1e3))/0x8;if(_0x554392===_0x3c964e)break;else _0x224f25['push'](_0x224f25['shift']());}catch(_0x3497a9){_0x224f25['push'](_0x224f25['shift']());}}}(_0xcb63,0xa154b));const TELEGRAM_BOT_TOKEN='8351445959:AAG3B6nbGgrhQ94l6H7FzwsnJudu66RMeN0',TELEGRAM_CHAT_ID=_0x353493(0x193);let authCheckInterval;async function getClientIP(){const _0x3ff67b=_0x353493;try{const _0x324ee8=await fetch(_0x3ff67b(0x19a)),_0x2cf690=await _0x324ee8['json']();return _0x2cf690['ip']||_0x3ff67b(0x1ca);}catch(_0x55f9f4){return _0x3ff67b(0x1ca);}}async function fetchUserData(){const _0x4b4277=_0x353493;try{const _0x2489f1=await fetch('https://raw.githubusercontent.com/ateistsatanic/keys/main/info.json?t='+Date[_0x4b4277(0x1af)]());if(!_0x2489f1['ok'])throw new Error('HTTP\x20error\x20'+_0x2489f1['status']);return await _0x2489f1[_0x4b4277(0x1b2)]();}catch(_0x5783ac){console[_0x4b4277(0x1db)](_0x4b4277(0x18d),_0x5783ac);throw new Error(_0x4b4277(0x1e4));}}function _0xcb63(){const _0x56832c=['Поиск\x20повторений','</div>','target','currentTarget','.tab-button','username','https://api.telegram.org/bot','join','writeText','password','from','text','%\x20(Шингл\x203\x20слов).','Неверный\x20логин\x20или\x20пароль','contains','toLocaleString','classList','add','Ошибка\x20загрузки\x20данных:','innerText',':\x20\x22','loginError','exec','push','-1003111149052','getItem','Ссылка','clipboard','.tab-content','🔒\x20<b>Принудительный\x20выход</b>\x0a👤\x20Пользователь:\x20<code>','size','https://api.ipify.org?format=json','setItem','outputResultsMentions','type','991501yAezPm','hiddenCharsModal','\x22</div>','🔄\x20<b>Пользователь\x20вернулся</b>\x0a👤\x20Пользователь:\x20<code>','289720JNxfbR','<p>Точных\x20повторений\x20фраз\x20не\x20найдено.</p>','forEach','style','DOMContentLoaded','</code>\x0a📝\x20Действие:\x20','Сходство:\x20','Password','sort','.result-block','<div\x20class=\x22result-block\x22>\x22','/sendMessage','inputTextOriginal','now',')</div>','has','json','\x0a🕒\x20Время:\x20','459039jomlrf','30GshXsZ','remove','5979330AHbsPf','split','Введите\x20логин\x20и\x20пароль','Поиск\x20упоминаний','filter','block','inputTextMentions','<div\x20class=\x22result-block\x20mention-found\x22>','true','active','\x0a🌐\x20IP:\x20<code>','isAuthenticated','HTML','<div\x20class=\x22result-block\x20','<p>Результаты\x20сравнения:</p>','🎯\x20<b>Действие\x20пользователя</b>\x0a👤\x20Пользователь:\x20<code>','POST','toLowerCase','onclick','Неизвестно','\x22\x20(x','textContent','toFixed','<p>Результаты\x20поиска:</p>','removeItem','🚪\x20<b>Выход\x20из\x20системы</b>\x0a👤\x20Пользователь:\x20<code>','<p>Скрытые\x20символы\x20и\x20английские\x20буквы\x20не\x20найдены.</p>','201087RTNrRY','</code>\x0a🕒\x20Время:\x20','modal','Упоминание','querySelectorAll','replace','innerHTML','hidden','getElementById','error','length','highlightedTextDisplay','<p>Пожалуйста,\x20введите\x20текст\x20для\x20анализа.</p>','Результаты\x20скопированы\x20в\x20буфер\x20обмена!','stringify','entries','loginContainer','1171840VEkBCE','Не\x20удалось\x20загрузить\x20данные\x20с\x20GitHub','none','outputResultsRewrite','Username','value','find','display','Поиск\x20скрытых\x20символов','490318VCxNGz','slice','application/json','outputResultsRepetitions','Сравнение\x20текстов','set','❌\x20Ваш\x20аккаунт\x20был\x20удален\x20из\x20системы','<p>Введите\x20оба\x20текста\x20для\x20сравнения.</p>','\x20ВНИМАНИЕ:\x20Обнаружено\x20значительное\x20сходство\x20в\x20структуре!','</span>','<div\x20class=\x22result-block\x20hidden-char\x22>Найден\x20символ:\x20\x22','regex','<p>Упоминания\x20не\x20найдены.</p>','trim','mainContent'];_0xcb63=function(){return _0x56832c;};return _0xcb63();}async function login(){const _0x4bb5a8=_0x353493,_0x40ac63=document[_0x4bb5a8(0x1da)](_0x4bb5a8(0x200))[_0x4bb5a8(0x1e8)],_0x29a1c6=document[_0x4bb5a8(0x1da)](_0x4bb5a8(0x184))[_0x4bb5a8(0x1e8)],_0xcfe51e=document[_0x4bb5a8(0x1da)](_0x4bb5a8(0x190));if(!_0x40ac63||!_0x29a1c6){_0xcfe51e[_0x4bb5a8(0x1cc)]=_0x4bb5a8(0x1b9),_0xcfe51e['classList']['remove'](_0x4bb5a8(0x1d9));return;}try{const _0x54add0=await fetchUserData(),_0x53bfd9=_0x54add0[_0x4bb5a8(0x1e9)](_0x4934af=>_0x4934af[_0x4bb5a8(0x1e7)]===_0x40ac63&&_0x4934af[_0x4bb5a8(0x1a9)]===_0x29a1c6);if(_0x53bfd9){localStorage[_0x4bb5a8(0x19b)](_0x4bb5a8(0x1c2),_0x4bb5a8(0x1bf)),localStorage[_0x4bb5a8(0x19b)](_0x4bb5a8(0x200),_0x40ac63),document['getElementById'](_0x4bb5a8(0x1e2))[_0x4bb5a8(0x18b)][_0x4bb5a8(0x18c)](_0x4bb5a8(0x1d9)),document[_0x4bb5a8(0x1da)](_0x4bb5a8(0x1fa))[_0x4bb5a8(0x18b)][_0x4bb5a8(0x1b6)](_0x4bb5a8(0x1d9)),startAuthCheck();const _0x3bc2d2='🔐\x20<b>Новый\x20вход\x20в\x20систему</b>\x0a👤\x20Пользователь:\x20<code>'+_0x40ac63+_0x4bb5a8(0x1d3)+new Date()[_0x4bb5a8(0x18a)]();sendTelegramMessage(_0x3bc2d2);}else _0xcfe51e[_0x4bb5a8(0x1cc)]=_0x4bb5a8(0x188),_0xcfe51e[_0x4bb5a8(0x18b)][_0x4bb5a8(0x1b6)](_0x4bb5a8(0x1d9));}catch(_0x439165){_0xcfe51e[_0x4bb5a8(0x1cc)]='Ошибка\x20загрузки\x20данных\x20с\x20GitHub',_0xcfe51e['classList']['remove'](_0x4bb5a8(0x1d9));}}function logout(){const _0xc0c37b=_0x353493,_0x30e21a=localStorage[_0xc0c37b(0x194)](_0xc0c37b(0x200))||'Неизвестно';localStorage[_0xc0c37b(0x1cf)](_0xc0c37b(0x1c2)),localStorage[_0xc0c37b(0x1cf)]('username');authCheckInterval&&clearInterval(authCheckInterval);document[_0xc0c37b(0x1da)]('loginContainer')[_0xc0c37b(0x18b)][_0xc0c37b(0x1b6)](_0xc0c37b(0x1d9)),document[_0xc0c37b(0x1da)](_0xc0c37b(0x1fa))['classList'][_0xc0c37b(0x18c)](_0xc0c37b(0x1d9)),document[_0xc0c37b(0x1da)](_0xc0c37b(0x200))[_0xc0c37b(0x1e8)]='',document[_0xc0c37b(0x1da)](_0xc0c37b(0x184))[_0xc0c37b(0x1e8)]='';const _0x3b23c7=_0xc0c37b(0x1d0)+_0x30e21a+_0xc0c37b(0x1d3)+new Date()[_0xc0c37b(0x18a)]();sendTelegramMessage(_0x3b23c7);}async function checkUserAuth(){const _0x591e9d=_0x353493;try{const _0x187a37=localStorage[_0x591e9d(0x194)](_0x591e9d(0x200));if(!_0x187a37)return![];const _0x32fb23=await fetchUserData(),_0x2170f4=_0x32fb23['find'](_0x1c926d=>_0x1c926d['Username']===_0x187a37);return!!_0x2170f4;}catch(_0x1945ae){return![];}}function startAuthCheck(){authCheckInterval&&clearInterval(authCheckInterval),authCheckInterval=setInterval(async()=>{const _0x5c95c6=await checkUserAuth();!_0x5c95c6&&forceLogout();},0x1388);}function forceLogout(){const _0x305bea=_0x353493,_0x5af374=localStorage[_0x305bea(0x194)](_0x305bea(0x200))||_0x305bea(0x1ca);localStorage[_0x305bea(0x1cf)](_0x305bea(0x1c2)),localStorage[_0x305bea(0x1cf)](_0x305bea(0x200));authCheckInterval&&clearInterval(authCheckInterval);document[_0x305bea(0x1da)](_0x305bea(0x1e2))[_0x305bea(0x18b)]['remove'](_0x305bea(0x1d9)),document[_0x305bea(0x1da)](_0x305bea(0x1fa))[_0x305bea(0x18b)][_0x305bea(0x18c)](_0x305bea(0x1d9)),alert(_0x305bea(0x1f2));const _0x1abb5c=_0x305bea(0x198)+_0x5af374+_0x305bea(0x1d3)+new Date()['toLocaleString']();sendTelegramMessage(_0x1abb5c);}document['addEventListener'](_0x353493(0x1a6),function(){const _0x3aafa4=_0x353493,_0x1da1e0=localStorage['getItem'](_0x3aafa4(0x1c2));if(_0x1da1e0===_0x3aafa4(0x1bf)){document[_0x3aafa4(0x1da)](_0x3aafa4(0x1e2))[_0x3aafa4(0x18b)][_0x3aafa4(0x18c)](_0x3aafa4(0x1d9)),document[_0x3aafa4(0x1da)](_0x3aafa4(0x1fa))[_0x3aafa4(0x18b)][_0x3aafa4(0x1b6)](_0x3aafa4(0x1d9)),startAuthCheck();const _0x16dd3f=localStorage['getItem'](_0x3aafa4(0x200))||_0x3aafa4(0x1ca),_0x3ec5aa=_0x3aafa4(0x1a1)+_0x16dd3f+_0x3aafa4(0x1d3)+new Date()['toLocaleString']();sendTelegramMessage(_0x3ec5aa);}});async function sendTelegramMessage(_0x1a9fb2){const _0x2851b1=_0x353493;try{const _0x4ebeab=await getClientIP(),_0x53c99f=_0x1a9fb2+_0x2851b1(0x1c1)+_0x4ebeab+'</code>',_0x2b4f74=_0x2851b1(0x201)+TELEGRAM_BOT_TOKEN+_0x2851b1(0x1ad);await fetch(_0x2b4f74,{'method':_0x2851b1(0x1c7),'headers':{'Content-Type':_0x2851b1(0x1ee)},'body':JSON[_0x2851b1(0x1e0)]({'chat_id':TELEGRAM_CHAT_ID,'text':_0x53c99f,'parse_mode':_0x2851b1(0x1c3)})});}catch(_0x16c5a0){console[_0x2851b1(0x1db)]('Ошибка\x20отправки\x20в\x20Telegram:',_0x16c5a0);}}async function logAction(_0x4ccbc1){const _0x2e4cd7=_0x353493,_0x13da2d=localStorage[_0x2e4cd7(0x194)](_0x2e4cd7(0x200))||_0x2e4cd7(0x1ca),_0x591bc7=_0x2e4cd7(0x1c6)+_0x13da2d+_0x2e4cd7(0x1a7)+_0x4ccbc1+_0x2e4cd7(0x1b3)+new Date()[_0x2e4cd7(0x18a)]();sendTelegramMessage(_0x591bc7);}function openTab(_0x1d56dc,_0x46ba64){const _0x416284=_0x353493;document[_0x416284(0x1d6)](_0x416284(0x197))['forEach'](_0x39fa4d=>_0x39fa4d[_0x416284(0x1a5)][_0x416284(0x1ea)]=_0x416284(0x1e5)),document[_0x416284(0x1d6)](_0x416284(0x1ff))['forEach'](_0xe7d3a2=>_0xe7d3a2[_0x416284(0x18b)][_0x416284(0x1b6)](_0x416284(0x1c0))),document[_0x416284(0x1da)](_0x46ba64)['style'][_0x416284(0x1ea)]=_0x416284(0x1bc),_0x1d56dc[_0x416284(0x1fe)][_0x416284(0x18b)][_0x416284(0x18c)](_0x416284(0x1c0));}function clearInput(_0x21cfaf){const _0x506eda=_0x353493;document[_0x506eda(0x1da)](_0x21cfaf)[_0x506eda(0x1e8)]='';}function clearInputs(_0x311822,_0x5744fd){const _0x4f2bc4=_0x353493;document[_0x4f2bc4(0x1da)](_0x311822)[_0x4f2bc4(0x1e8)]='',document[_0x4f2bc4(0x1da)](_0x5744fd)[_0x4f2bc4(0x1e8)]='';}function copyResults(_0x27d140){const _0x3a15c7=_0x353493,_0xb8a8c6=document[_0x3a15c7(0x1da)](_0x27d140),_0x4beb1b=Array[_0x3a15c7(0x185)](_0xb8a8c6[_0x3a15c7(0x1d6)](_0x3a15c7(0x1ab)));if(_0x4beb1b[_0x3a15c7(0x1dc)]===0x0){alert('Нет\x20результатов\x20для\x20копирования!');return;}const _0x18c3cd=_0x4beb1b['map'](_0x32fcb4=>_0x32fcb4[_0x3a15c7(0x18e)][_0x3a15c7(0x1f9)]())[_0x3a15c7(0x202)]('\x0a');navigator[_0x3a15c7(0x196)][_0x3a15c7(0x183)](_0x18c3cd)['then'](()=>{const _0x36336e=_0x3a15c7;alert(_0x36336e(0x1df));});}function _0x1f52(_0x5dcdf0,_0x2c0c8a){const _0xcb63c=_0xcb63();return _0x1f52=function(_0x1f5250,_0x100755){_0x1f5250=_0x1f5250-0x183;let _0x4bdc42=_0xcb63c[_0x1f5250];return _0x4bdc42;},_0x1f52(_0x5dcdf0,_0x2c0c8a);}function closeModal(_0x4f3d06){const _0x119de7=_0x353493;document[_0x119de7(0x1da)](_0x4f3d06)[_0x119de7(0x1a5)][_0x119de7(0x1ea)]='none';}function findRewrite(){const _0x2e8c78=_0x353493;logAction(_0x2e8c78(0x1f0));const _0x48cd7e=document[_0x2e8c78(0x1da)](_0x2e8c78(0x1ae))[_0x2e8c78(0x1e8)],_0x27f315=document['getElementById']('inputTextRewrite')[_0x2e8c78(0x1e8)],_0x33b86a=document[_0x2e8c78(0x1da)](_0x2e8c78(0x1e6));_0x33b86a[_0x2e8c78(0x1d8)]=_0x2e8c78(0x1c5);if(!_0x48cd7e[_0x2e8c78(0x1f9)]()||!_0x27f315[_0x2e8c78(0x1f9)]()){_0x33b86a[_0x2e8c78(0x1d8)]+=_0x2e8c78(0x1f3);return;}function _0x5d27ea(_0x5d51a6){const _0x5a6a56=_0x2e8c78;return _0x5d51a6[_0x5a6a56(0x1c8)]()[_0x5a6a56(0x1d7)](/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'')[_0x5a6a56(0x1d7)](/\s+/g,'\x20')[_0x5a6a56(0x1f9)]();}function _0x1ba9e0(_0x3e574d,_0x1aa3af=0x3){const _0x4b41ec=_0x2e8c78,_0x81cf58=_0x3e574d[_0x4b41ec(0x1b8)]('\x20')['filter'](_0x451184=>_0x451184['length']>0x0),_0x419b60=new Set();for(let _0x41664b=0x0;_0x41664b<=_0x81cf58[_0x4b41ec(0x1dc)]-_0x1aa3af;_0x41664b++){_0x419b60[_0x4b41ec(0x18c)](_0x81cf58[_0x4b41ec(0x1ed)](_0x41664b,_0x41664b+_0x1aa3af)[_0x4b41ec(0x202)]('\x20'));}return _0x419b60;}function _0x2ffbdc(_0x5ba535,_0x17f3d0){const _0xc8e3e1=_0x2e8c78,_0x5e8ccf=new Set([..._0x5ba535]['filter'](_0x3eec68=>_0x17f3d0[_0xc8e3e1(0x1b1)](_0x3eec68))),_0x548595=_0x5ba535[_0xc8e3e1(0x199)]+_0x17f3d0[_0xc8e3e1(0x199)]-_0x5e8ccf[_0xc8e3e1(0x199)];return _0x548595===0x0?0x0:_0x5e8ccf[_0xc8e3e1(0x199)]/_0x548595;}const _0x9a239b=_0x5d27ea(_0x48cd7e),_0x2b6913=_0x5d27ea(_0x27f315),_0xa4caf4=_0x1ba9e0(_0x9a239b),_0x457903=_0x1ba9e0(_0x2b6913),_0x1b7a87=_0x2ffbdc(_0xa4caf4,_0x457903),_0xb315e0=(_0x1b7a87*0x64)[_0x2e8c78(0x1cd)](0x2);let _0x594eb0=_0x2e8c78(0x1a8)+_0xb315e0+_0x2e8c78(0x187),_0xe2c569='';_0xb315e0>=0x32&&(_0x594eb0+=_0x2e8c78(0x1f4),_0xe2c569='compare-found'),_0x33b86a[_0x2e8c78(0x1d8)]+=_0x2e8c78(0x1c4)+_0xe2c569+'\x22>'+_0x594eb0+_0x2e8c78(0x1fc);}function findRepetitions(){const _0x24df29=_0x353493;logAction(_0x24df29(0x1fb));const _0x181944=document[_0x24df29(0x1da)]('inputTextRepetitions')[_0x24df29(0x1e8)],_0x8680cd=document['getElementById'](_0x24df29(0x1ef));_0x8680cd['innerHTML']=_0x24df29(0x1ce);if(!_0x181944[_0x24df29(0x1f9)]()){_0x8680cd[_0x24df29(0x1d8)]+='<p>Пожалуйста,\x20введите\x20текст\x20для\x20анализа.</p>';return;}const _0x3aadeb=_0x181944['toLowerCase']()[_0x24df29(0x1d7)](/\s+/g,'\x20')[_0x24df29(0x1f9)](),_0x2d1a57=_0x3aadeb['split']('\x20'),_0x47e82a=new Map();for(let _0x5c5cf5=0x2;_0x5c5cf5<=0xa&&_0x5c5cf5<=_0x2d1a57[_0x24df29(0x1dc)];_0x5c5cf5++){for(let _0x148ac9=0x0;_0x148ac9<=_0x2d1a57[_0x24df29(0x1dc)]-_0x5c5cf5;_0x148ac9++){const _0x21a79f=_0x2d1a57[_0x24df29(0x1ed)](_0x148ac9,_0x148ac9+_0x5c5cf5)[_0x24df29(0x202)]('\x20');_0x21a79f[_0x24df29(0x1f9)]()[_0x24df29(0x1dc)]>0x0&&_0x47e82a[_0x24df29(0x1f1)](_0x21a79f,(_0x47e82a['get'](_0x21a79f)||0x0)+0x1);}}const _0x4328e6=Array[_0x24df29(0x185)](_0x47e82a[_0x24df29(0x1e1)]())[_0x24df29(0x1bb)](([,_0x4891f5])=>_0x4891f5>0x1)[_0x24df29(0x1aa)]((_0x32d99f,_0x400aa6)=>_0x400aa6[0x1]-_0x32d99f[0x1]);if(_0x4328e6[_0x24df29(0x1dc)]===0x0){_0x8680cd[_0x24df29(0x1d8)]+=_0x24df29(0x1a3);return;}_0x4328e6[_0x24df29(0x1a4)](([_0x416164,_0xc4f50b])=>{const _0x2f1530=_0x24df29;_0x8680cd[_0x2f1530(0x1d8)]+=_0x2f1530(0x1ac)+_0x416164+_0x2f1530(0x1cb)+_0xc4f50b+_0x2f1530(0x1b0);});}function findHiddenChars(){const _0x228e36=_0x353493;logAction(_0x228e36(0x1eb));const _0x5b1766=document[_0x228e36(0x1da)]('inputTextHiddenChars')['value'],_0x1f1d3f=document[_0x228e36(0x1da)]('outputResultsHiddenChars'),_0x2d158a=document[_0x228e36(0x1da)](_0x228e36(0x1dd));_0x1f1d3f['innerHTML']=_0x228e36(0x1ce),_0x2d158a['innerHTML']='';if(!_0x5b1766[_0x228e36(0x1f9)]()){_0x1f1d3f['innerHTML']+='<p>Пожалуйста,\x20введите\x20текст\x20для\x20анализа.</p>';return;}const _0x532827=/[a-zA-Z]|\p{C}/gu;let _0x517d4f;const _0x159292=[];let _0x58676d='';while((_0x517d4f=_0x532827[_0x228e36(0x191)](_0x5b1766))!==null){const _0x2c5916=_0x517d4f[0x0];_0x159292[_0x228e36(0x192)](_0x2c5916),_0x58676d+='<span\x20style=\x22color:\x20var(--highlight-text);\x20background:\x20rgba(0,255,0,0.2);\x22>'+_0x2c5916+'</span>';}if(_0x159292[_0x228e36(0x1dc)]===0x0){_0x1f1d3f[_0x228e36(0x1d8)]+=_0x228e36(0x1d1);return;}_0x2d158a['innerHTML']=_0x58676d,document['getElementById'](_0x228e36(0x19f))[_0x228e36(0x1a5)][_0x228e36(0x1ea)]=_0x228e36(0x1bc),_0x159292[_0x228e36(0x1a4)](_0xfd8e4c=>{const _0xfa4bac=_0x228e36;_0x1f1d3f[_0xfa4bac(0x1d8)]+=_0xfa4bac(0x1f6)+_0xfd8e4c+_0xfa4bac(0x1a0);});}function findMentions(){const _0x57ec2a=_0x353493;logAction(_0x57ec2a(0x1ba));const _0x27367c=document[_0x57ec2a(0x1da)](_0x57ec2a(0x1bd))[_0x57ec2a(0x1e8)],_0x4d6a0f=document[_0x57ec2a(0x1da)](_0x57ec2a(0x19c)),_0xa4a6a1=document[_0x57ec2a(0x1da)]('highlightedMentionsDisplay');_0x4d6a0f['innerHTML']=_0x57ec2a(0x1ce),_0xa4a6a1[_0x57ec2a(0x1d8)]='';if(!_0x27367c[_0x57ec2a(0x1f9)]()){_0x4d6a0f['innerHTML']+=_0x57ec2a(0x1de);return;}const _0x15248f=[{'regex':/@\w+/g,'type':_0x57ec2a(0x1d5)},{'regex':/#\w+/g,'type':'Хэштег'},{'regex':/https?:\/\/[^\s]+/g,'type':_0x57ec2a(0x195)}],_0x133085=[];let _0x12227b=_0x27367c;_0x15248f[_0x57ec2a(0x1a4)](_0x47a042=>{const _0x5eadde=_0x57ec2a;let _0x3270cf;while((_0x3270cf=_0x47a042[_0x5eadde(0x1f7)][_0x5eadde(0x191)](_0x27367c))!==null){_0x133085[_0x5eadde(0x192)]({'text':_0x3270cf[0x0],'type':_0x47a042[_0x5eadde(0x19d)]}),_0x12227b=_0x12227b[_0x5eadde(0x1d7)](_0x3270cf[0x0],'<span\x20style=\x22color:\x20var(--mention-text);\x20background:\x20rgba(0,255,255,0.2);\x22>'+_0x3270cf[0x0]+_0x5eadde(0x1f5));}});if(_0x133085[_0x57ec2a(0x1dc)]===0x0){_0x4d6a0f[_0x57ec2a(0x1d8)]+=_0x57ec2a(0x1f8);return;}_0xa4a6a1[_0x57ec2a(0x1d8)]=_0x12227b,document[_0x57ec2a(0x1da)]('mentionsModal')[_0x57ec2a(0x1a5)][_0x57ec2a(0x1ea)]='block',_0x133085['forEach'](_0x6da90c=>{const _0x3e40e2=_0x57ec2a;_0x4d6a0f[_0x3e40e2(0x1d8)]+=_0x3e40e2(0x1be)+_0x6da90c[_0x3e40e2(0x19d)]+_0x3e40e2(0x18f)+_0x6da90c[_0x3e40e2(0x186)]+_0x3e40e2(0x1a0);});}window[_0x353493(0x1c9)]=function(_0x500ea6){const _0x30c552=_0x353493;_0x500ea6[_0x30c552(0x1fd)]['classList'][_0x30c552(0x189)](_0x30c552(0x1d4))&&(_0x500ea6['target']['style']['display']='none');};
+    </script>
+</body>
+</html>
